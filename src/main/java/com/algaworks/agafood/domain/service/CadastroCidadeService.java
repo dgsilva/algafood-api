@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.algaworks.agafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.agafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.agafood.domain.model.Cidade;
+import com.algaworks.agafood.domain.model.Estado;
 import com.algaworks.agafood.domain.repository.CidadeRepository;
+import com.algaworks.agafood.domain.repository.EstadoRepository;
 
 @Service
 public class CadastroCidadeService {
@@ -17,14 +19,24 @@ public class CadastroCidadeService {
 	@Autowired
 	CidadeRepository cidadeRepository;
 	
+	@Autowired
+	EstadoRepository estadoRepository;
+	
 	public Cidade salvar(@RequestBody Cidade cidade) {
-		return cidadeRepository.salvar(cidade);
+		Long estadoId = cidade.getEstado().getId();
+		
+		Estado estado = estadoRepository.findById(estadoId)
+				.orElseThrow(()-> new EntidadeNaoEncontradaException(
+						String.format("Não existe cadastro de estado com código %d", estadoId)));
+		cidade.setEstado(estado);
+				
+		return cidadeRepository.save(cidade);
 	}
 	
 	
 	public void excluir(Long restauranteId) {
 		try {
-			cidadeRepository.remover(restauranteId);
+			cidadeRepository.deleteById(restauranteId);
 			
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
