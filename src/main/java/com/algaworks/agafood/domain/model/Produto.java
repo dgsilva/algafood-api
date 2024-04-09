@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Produtos {
+public class Produto {
 
 	@EqualsAndHashCode.Include
 	@Id
