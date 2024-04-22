@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.agafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.agafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.agafood.domain.model.Cidade;
 import com.algaworks.agafood.domain.repository.CidadeRepository;
 import com.algaworks.agafood.domain.service.CadastroCidadeService;
-
+@RestController
+@RequestMapping("/cidades")
 public class CidadeController {
 	
 	

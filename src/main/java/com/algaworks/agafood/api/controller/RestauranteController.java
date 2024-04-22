@@ -39,7 +39,10 @@ public class RestauranteController {
 
 	@GetMapping
 	public List<Restaurante> listar() {
-		return restauranteRepository.findAll();
+		List<Restaurante> restaurantes = restauranteRepository.findAll();
+		System.out.println("O nome da cozinha é: ");
+		System.out.println(restaurantes.get(0).getNome());
+		return restaurantes;
 	}
 
 	@GetMapping("/{restauranteId}")
