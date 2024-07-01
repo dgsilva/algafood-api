@@ -17,7 +17,7 @@ JpaSpecificationExecutor<Restaurante> {
 	// Errata: se um restaurante não tiver nenhuma forma de pagamento associada a ele,
 	// esse restaurante não será retornado usando JOIN FETCH r.formasPagamento.
 	// Para resolver isso, temos que usar LEFT JOIN FETCH r.formasPagamento
-	@Query("from Restaurante r join fetch r.cozinha left join fetch r.formasPagamento")
+	@Query("from Restaurante r join fetch r.cozinha")
 	List<Restaurante> findAll();
 	
 	List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
