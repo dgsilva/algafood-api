@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.algaworks.agafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.agafood.domain.exception.NegocioException;
 import com.algaworks.agafood.domain.model.Restaurante;
 import com.algaworks.agafood.domain.repository.RestauranteRepository;
 import com.algaworks.agafood.domain.service.CadastroRestauranteService;
@@ -42,8 +47,13 @@ public class RestauranteController {
 	}
 
 	@PostMapping()
+	@ResponseStatus(HttpStatus.CREATED)	
 	public Restaurante adicionar(@RequestBody Restaurante restaurante) {
-		return cadastroRestaurante.salvar(restaurante);
+		try {
+			return cadastroRestaurante.salvar(restaurante);
+		}catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/{restauranteId}")
@@ -53,8 +63,11 @@ public class RestauranteController {
 	    
 	    BeanUtils.copyProperties(restaurante, restauranteAtual, 
 	            "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
-	    
-	    return cadastroRestaurante.salvar(restauranteAtual);
+	    try {	    	
+	    	return cadastroRestaurante.salvar(restauranteAtual);
+	    }catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 
 	@PatchMapping("/{restauranteId}")

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.algaworks.agafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.agafood.domain.exception.EntidadeNaoEncontradaException;
