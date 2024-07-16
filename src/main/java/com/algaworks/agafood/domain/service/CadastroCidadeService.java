@@ -26,12 +26,16 @@ public class CadastroCidadeService {
 	@Autowired
 	EstadoRepository estadoRepository;
 	
-	public Cidade salvar(@RequestBody Cidade cidade) {
+	@Autowired
+	private CadastroEstadoService cadastroEstadoService;
+	
+	public Cidade salvar(Cidade cidade) {
 		Long estadoId = cidade.getEstado().getId();
 		
-		Estado estado = estadoRepository.findById(estadoId)
-				.orElseThrow(()-> new EntidadeNaoEncontradaException(
-						String.format(MSG_CIDADE_NAO_ENCONTRADA, estadoId)));
+		Estado estado = cadastroEstadoService.buscarOuFalhar(estadoId);
+//		Estado estado = estadoRepository.findById(estadoId)
+//		.orElseThrow(() -> new EntidadeNaoEncontradaException(
+//				String.format("Não existe cadastro de estado com código %d", estadoId)));
 		cidade.setEstado(estado);
 				
 		return cidadeRepository.save(cidade);
