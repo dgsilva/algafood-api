@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.agafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.agafood.domain.exception.EstadoNaoEncontradaException;
 import com.algaworks.agafood.domain.exception.NegocioException;
 import com.algaworks.agafood.domain.model.Cidade;
@@ -36,7 +35,7 @@ public class CidadeController {
 		return cidadeRepository.findAll();
 	}
 
-	@GetMapping("/{restauranteId}")
+	@GetMapping("/{cidadeId}")
 	public Cidade buscar(@PathVariable Long cidadeId) {
 		return cadastroCidade.buscarOuFalhar(cidadeId);
 	}
@@ -60,7 +59,7 @@ public class CidadeController {
 			
 			return cadastroCidade.salvar(cidadeAtual);
 		}catch (EstadoNaoEncontradaException e) {
-			throw new NegocioException(e.getMessage(), e);
+			throw new NegocioException(e.getMessage());
 		}
 	}
 	
@@ -68,5 +67,4 @@ public class CidadeController {
 	public void remover(@PathVariable Long cidadeId) {
 		cadastroCidade.excluir(cidadeId);
 	}
-
 }

@@ -20,10 +20,12 @@ public class CadastroRestauranteService {
 
 	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removida, pois está em uso";
 	private static final String MSG_RESTAURANTE_NAO_ENCONTRADA = "Não existe um cadastro de restaurante com código %d";
+	
 	@Autowired
 	CozinhaRepository cozinhaRepository;
 	@Autowired
 	RestauranteRepository restauranteRepository;
+	
 	
 	public Restaurante salvar(@RequestBody Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
